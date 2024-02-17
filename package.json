@@ -5,9 +5,6 @@
   "main": "index.js",
   "scripts": {
     "start:local": "NODE_ENV=local nodemon server.js",
-    "migrate:up": "sequelize db:migrate",
-    "migrate:undo": "sequelize db:migrate:undo",
-    "migrate": "node migrate.js",
     "test": "jest",
     "prepare": "husky install",
     "lint": "eslint .",
