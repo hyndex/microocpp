@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microocpp-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microocpp-app
+  template:
+    metadata:
+      labels:
+        app: microocpp-app
+    spec:
+      containers:
+      - name: microocpp-app
+        image: microocpp-app:latest
+        ports:
+        - containerPort: 6000
+        env:
+          - name: WEB_SOCKET_PING_INTERVAL
+            value: "10000"
+          - name: WEB_SOCKET_MAX_PONG_FAILS
+            value: "3"
+          - name: NODE_ENV
+            value: "production"
+          - name: METER_VALUE_TIMEOUT
+            value: "300"
+          - name: DB_CONNECTION_URL
+            valueFrom:
+              secretKeyRef:
+                name: microocpp-secret
+                key: DB_CONNECTION_URL
+          - name: STATUS_CHANGE_WEBHOOK_URL
+            valueFrom:
+              secretKeyRef:
+                name: microocpp-secret
+                key: STATUS_CHANGE_WEBHOOK_URL
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
