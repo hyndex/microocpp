@@ -28,10 +28,6 @@ module.exports = (sequelize, DataTypes) =>
       enabled: {
         type: DataTypes.BOOLEAN,
       },
-      pricePerKwh: {
-        type: DataTypes.FLOAT,
-        defaultValue: 20,
-      },
       verified: {
         type: DataTypes.BOOLEAN,
       },

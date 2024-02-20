@@ -74,7 +74,7 @@ module.exports = (sequelize, DataTypes) =>
       },
       limitType: {
         type: DataTypes.STRING,
-        defaultValue: '4',
+        defaultValue: 'KWH',
         validate: {
           isValidRole(value) {
             const option = ['KWH', 'TIME', 'SOC', 'FULL'];

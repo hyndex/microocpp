@@ -42,30 +42,6 @@ module.exports = (sequelize, DataTypes) =>
           },
         },
       },
-      type: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        defaultValue: 'CCS1',
-        validate: {
-          isValidRole(value) {
-            const option = [
-              'IEC60309',
-              'CCS2',
-              'CCS1',
-              'CHADEMO',
-              'TYPE1',
-              'TYPE2',
-              'IEC62196',
-              '3PIN',
-            ];
-            if (!option.includes(value)) {
-              throw new Error(
-                'Only IEC60309, CCS2, CCS1, CHADEMO, TYPE1, TYPE2, IEC62196 AND 3PIN values are allowed!',
-              );
-            }
-          },
-        },
-      },
     },
     {
       hooks: {
