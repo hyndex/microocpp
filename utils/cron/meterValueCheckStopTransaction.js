@@ -15,7 +15,6 @@ module.exports.meterValueCheckStopTransaction = async ({
       include: [
         {
           model: db.ChargingSession,
-          include: [{ model: db.SessionBilling }],
         },
       ],
     });

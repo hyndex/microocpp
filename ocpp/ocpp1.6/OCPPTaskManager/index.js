@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 const _ = require('lodash');
 const retry = require('async-retry');
 const { nanoid } = require('nanoid');
@@ -11,7 +10,6 @@ const OCPPJParser = require('./parsers/json');
 const OCPPSParser = require('./parsers/soap');
 const MessageHandler = require('./handler');
 const Hooks = require('./utils/hooks');
-// const validateOCPP = require('../../schemas/validate');
 
 const noopthunk = () => _.noop;
 
