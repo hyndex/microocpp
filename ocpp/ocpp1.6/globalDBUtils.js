@@ -4,7 +4,9 @@ const getModels = require('../../models');
 
 // This function returns the charger with the specified chargerId
 async function getCharger(chargerId) {
-  const charger = await getModels.Charger.findByPk(chargerId);
+  const charger = await getModels.Charger.findOne({
+    uuid: chargerId,
+  });
   return charger;
 }
 

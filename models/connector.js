@@ -1,4 +1,3 @@
-const { nanoid } = require('nanoid');
 const {
   notifyConnectorStatusChange,
 } = require('../webhooks/notifyConnectorStatusChange');
@@ -8,10 +7,10 @@ module.exports = (sequelize, DataTypes) =>
     'Connector',
     {
       id: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: () => `connector_${nanoid(10)}`,
         primaryKey: true,
+        autoIncrement: true,
       },
       connectorId: {
         type: DataTypes.INTEGER,
@@ -44,6 +43,9 @@ module.exports = (sequelize, DataTypes) =>
       },
     },
     {
+      timestamps: true,
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
       hooks: {
         // eslint-disable-next-line no-unused-vars
         afterUpdate: async (connector, options) => {

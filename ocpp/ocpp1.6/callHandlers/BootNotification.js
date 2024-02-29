@@ -17,7 +17,7 @@ module.exports = async (payload, { callResult, callError }, chargepointId) => {
         model: get(payload, 'chargePointModel'),
         vendor: get(payload, 'chargePointVendor'),
       },
-      { where: { id: chargepointId } },
+      { where: { uuid: chargepointId } },
     );
   } catch (error) {
     callError(error.message);

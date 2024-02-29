@@ -1,14 +1,12 @@
-const { nanoid } = require('nanoid');
-
 module.exports = (sequelize, DataTypes) =>
   sequelize.define(
     'Charger',
     {
       id: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: () => `charger_${nanoid(10)}`,
         primaryKey: true,
+        autoIncrement: true,
       },
       meterValueInterval: {
         type: DataTypes.INTEGER,
@@ -16,10 +14,10 @@ module.exports = (sequelize, DataTypes) =>
       lastHeartbeat: {
         type: DataTypes.DATE,
       },
-      lastCsms: {
+      vendor: {
         type: DataTypes.STRING,
       },
-      vendor: {
+      uuid: {
         type: DataTypes.STRING,
       },
       model: {
@@ -69,6 +67,9 @@ module.exports = (sequelize, DataTypes) =>
           attributes: {},
         },
       },
+      timestamps: true,
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
       hooks: {},
     },
   );

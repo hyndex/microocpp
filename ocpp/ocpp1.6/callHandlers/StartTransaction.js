@@ -11,8 +11,15 @@ module.exports = async (payload, { callResult, callError }, chargepointId) => {
     const { idTag, meterStart, timestamp } = payload;
 
     const connector = await db.Connector.findOne({
-      ChargerId: chargepointId,
       ConnectorId: connectorId,
+      include: [
+        {
+          model: db.Charger,
+          where: {
+            uuid: chargepointId,
+          },
+        },
+      ],
     });
 
     await db.ChargingSession.create({

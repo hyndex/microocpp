@@ -1,14 +1,12 @@
-const { nanoid } = require('nanoid');
-
 module.exports = (sequelize, DataTypes) =>
   sequelize.define(
     'MeterValues',
     {
       id: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
-        defaultValue: () => nanoid(20),
+        autoIncrement: true,
       },
       value: {
         type: DataTypes.STRING,
@@ -34,6 +32,8 @@ module.exports = (sequelize, DataTypes) =>
       },
     },
     {
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
       timestamps: false,
     },
   );

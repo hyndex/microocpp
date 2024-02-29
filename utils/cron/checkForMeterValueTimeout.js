@@ -11,7 +11,7 @@ module.exports.checkForMeterValueTimeout = async () => {
     where: {
       meterStop: null, // Only consider active sessions
       endTime: null,
-      createdAt: {
+      created_at: {
         [Op.lte]: new Date(new Date() - timeout * 1000),
       },
     },

@@ -19,7 +19,15 @@ module.exports = async (payload, { callResult, callError }, chargepointId) => {
     const [chargingSession, connector] = await Promise.all([
       db.ChargingSession.findOne({ where: { transactionId } }),
       db.Connector.findOne({
-        where: { ChargerId: chargepointId, connectorId },
+        where: { connectorId },
+        include: [
+          {
+            model: db.Charger,
+            where: {
+              uuid: chargepointId,
+            },
+          },
+        ],
       }),
     ]);
 

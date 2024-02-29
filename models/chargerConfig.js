@@ -1,14 +1,12 @@
-const { nanoid } = require('nanoid');
-
 module.exports = (sequelize, DataTypes) =>
   sequelize.define(
     'Chargerconfig',
     {
       id: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: () => `Chargerconfig_${nanoid(20)}`,
         primaryKey: true,
+        autoIncrement: true,
       },
       key: {
         type: DataTypes.STRING,
@@ -20,5 +18,5 @@ module.exports = (sequelize, DataTypes) =>
         type: DataTypes.BOOLEAN,
       },
     },
-    {},
+    { timestamps: true, createdAt: 'created_at', updatedAt: 'updated_at' },
   );

@@ -1,5 +1,4 @@
 /* eslint-disable no-param-reassign */
-const { nanoid } = require('nanoid');
 const { isBefore, isDate } = require('date-fns');
 
 module.exports = (sequelize, DataTypes) =>
@@ -7,12 +6,12 @@ module.exports = (sequelize, DataTypes) =>
     'idTag',
     {
       id: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: () => `${nanoid(15)}`,
         primaryKey: true,
+        autoIncrement: true,
       },
-      parentIdtag: {
+      tag_value: {
         type: DataTypes.STRING,
       },
       isBlocked: {
@@ -37,12 +36,12 @@ module.exports = (sequelize, DataTypes) =>
       idTag: {
         type: DataTypes.VIRTUAL,
         get() {
-          return this.id;
+          return this.tag_value;
         },
         set(value) {
-          this.id = value;
+          this.tag_value = value;
         },
       },
     },
-    {},
+    { timestamps: true, createdAt: 'created_at', updatedAt: 'updated_at' },
   );

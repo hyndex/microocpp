@@ -1,4 +1,3 @@
-const { nanoid } = require('nanoid');
 const {
   notifyTransactionCompletion,
 } = require('../webhooks/notifyTransactionCompletion');
@@ -8,10 +7,10 @@ module.exports = (sequelize, DataTypes) =>
     'ChargingSession',
     {
       id: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
-        defaultValue: () => `session_${nanoid(20)}`,
         primaryKey: true,
+        autoIncrement: true,
       },
       transactionId: {
         type: DataTypes.INTEGER,
@@ -39,9 +38,9 @@ module.exports = (sequelize, DataTypes) =>
       meterStop: {
         type: DataTypes.FLOAT,
       },
-      reservationId: {
-        type: DataTypes.STRING,
-      },
+      // reservationId: {
+      //   type: DataTypes.STRING,
+      // },
       limit: {
         type: DataTypes.FLOAT,
       },
@@ -90,12 +89,15 @@ module.exports = (sequelize, DataTypes) =>
         type: DataTypes.STRING,
         allowNull: false,
       },
-      stopIdTagId: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
+      // stopIdTagId: {
+      //   type: DataTypes.STRING,
+      //   allowNull: true,
+      // },
     },
     {
+      timestamps: false,
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
       hooks: {
         // eslint-disable-next-line no-unused-vars
         afterUpdate: async (session, options) => {
