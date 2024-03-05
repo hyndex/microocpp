@@ -27,9 +27,6 @@ module.exports = (sequelize, DataTypes) =>
       location: {
         type: DataTypes.STRING,
       },
-      timestamp: {
-        type: DataTypes.DATE,
-      },
     },
     {
       createdAt: 'created_at',
