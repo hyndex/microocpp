@@ -1,5 +1,4 @@
 const { formatISO, isDate } = require('date-fns');
-const _ = require('lodash');
 const getModels = require('../../models');
 
 // This function returns the charger with the specified chargerId

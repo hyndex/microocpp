@@ -3,7 +3,6 @@ const {
 } = require('../../../utils/queue/generateTransactionId');
 const { setChargerQueue } = require('../../../utils/queue/remoteStartQueue');
 const connectedCps = require('../connectedCps');
-const { getIdTagDetails } = require('../globalDBUtils');
 
 /**
  * Initiates a remote start transaction for a charge point.
