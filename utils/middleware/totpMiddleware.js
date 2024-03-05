@@ -1,3 +1,4 @@
+/* eslint-disable no-bitwise */
 const { totp } = require('otplib');
 
 // Set up your TOTP secret and options

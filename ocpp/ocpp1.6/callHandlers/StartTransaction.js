@@ -10,7 +10,7 @@ module.exports = async (payload, { callResult, callError }, chargepointId) => {
     const { connectorId, idTag, meterStart, timestamp } = payload;
 
     const connector = await db.Connector.findOne({
-      where: { ConnectorId: connectorId, charger_id: chargepointId },
+      where: { connectorId, charger_id: chargepointId },
     });
 
     const tagDetails = await getIdTagDetails(idTag);

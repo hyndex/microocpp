@@ -3,10 +3,14 @@ const getModels = require('../../models');
 
 // This function returns the charger with the specified chargerId
 async function getCharger(chargerId) {
-  const charger = await getModels.Charger.findOne({
-    where: { id: chargerId },
-  });
-  return charger;
+  try {
+    const charger = await getModels.Charger.findOne({
+      where: { id: chargerId },
+    });
+    return charger;
+  } catch (error) {
+    return null;
+  }
 }
 
 async function getOrder(userId) {
