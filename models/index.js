@@ -31,6 +31,9 @@ IdTag.hasMany(ChargingSession, { foreignKey: 'userId' });
 ChargingSession.belongsTo(Connector, { foreignKey: 'connectorId' });
 Connector.hasMany(ChargingSession, { foreignKey: 'connectorId' });
 
+ChargingSession.belongsTo(Charger, { foreignKey: 'chargerId' });
+Charger.hasMany(ChargingSession, { foreignKey: 'chargerId' });
+
 ChargingSession.hasMany(MeterValue, { foreignKey: 'ChargingSessionId' });
 MeterValue.belongsTo(ChargingSession, { foreignKey: 'ChargingSessionId' });
 

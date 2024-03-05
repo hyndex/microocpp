@@ -22,6 +22,7 @@ module.exports = async (payload, { callResult, callError }, chargepointId) => {
       startTime: new Date(timestamp),
       idTagId: tagDetails.id,
       userId: tagDetails.userId,
+      chargerId: connector.charger_id,
       limit,
       limitType,
     });
