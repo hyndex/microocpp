@@ -1,33 +1,27 @@
 const getModels = require('../../../models');
 const { getChargerQueue } = require('../../../utils/queue/remoteStartQueue');
+const { getIdTagDetails } = require('../globalDBUtils');
 
 module.exports = async (payload, { callResult, callError }, chargepointId) => {
   try {
     const db = getModels;
-    const { txnId, connectorId, limit, limitType } = await getChargerQueue(
-      chargepointId,
-    );
+    const { txnId, limit, limitType } = await getChargerQueue(chargepointId);
 
-    const { idTag, meterStart, timestamp } = payload;
+    const { connectorId, idTag, meterStart, timestamp } = payload;
 
     const connector = await db.Connector.findOne({
-      ConnectorId: connectorId,
-      include: [
-        {
-          model: db.Charger,
-          where: {
-            uuid: chargepointId,
-          },
-        },
-      ],
+      where: { ConnectorId: connectorId, charger_id: chargepointId },
     });
+
+    const tagDetails = await getIdTagDetails(idTag);
 
     await db.ChargingSession.create({
       transactionId: txnId,
-      ConnectorId: connector.id,
+      connectorId: connector.id,
       meterStart,
       startTime: new Date(timestamp),
-      idTagId: idTag,
+      idTagId: tagDetails.id,
+      userId: tagDetails.userId,
       limit,
       limitType,
     });

@@ -5,7 +5,7 @@ module.exports = async (payload, { callResult, callError }, chargepointId) => {
     const db = getModels;
     await db.Charger.update(
       { lastHeartbeat: new Date() },
-      { where: { uuid: chargepointId } },
+      { where: { id: chargepointId } },
     );
     callResult({ currentTime: new Date().toISOString() });
   } catch (error) {

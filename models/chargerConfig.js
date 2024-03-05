@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) =>
   sequelize.define(
-    'Chargerconfig',
+    'ChargerConfig',
     {
       id: {
         type: DataTypes.INTEGER,

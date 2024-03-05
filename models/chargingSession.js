@@ -89,10 +89,6 @@ module.exports = (sequelize, DataTypes) =>
         type: DataTypes.STRING,
         allowNull: false,
       },
-      // stopIdTagId: {
-      //   type: DataTypes.STRING,
-      //   allowNull: true,
-      // },
     },
     {
       timestamps: false,

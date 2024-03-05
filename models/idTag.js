@@ -3,7 +3,7 @@ const { isBefore, isDate } = require('date-fns');
 
 module.exports = (sequelize, DataTypes) =>
   sequelize.define(
-    'idTag',
+    'IdTag',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -14,13 +14,18 @@ module.exports = (sequelize, DataTypes) =>
       tag_value: {
         type: DataTypes.STRING,
       },
+      userId: {
+        type: DataTypes.INTEGER,
+      },
       isBlocked: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
+        field: 'is_blocked',
       },
       expiryDate: {
         type: DataTypes.DATE,
         allowNull: true,
+        field: 'expiry_date',
       },
       isExpired: {
         type: DataTypes.VIRTUAL,

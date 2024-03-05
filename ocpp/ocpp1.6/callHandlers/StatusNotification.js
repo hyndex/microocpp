@@ -2,24 +2,19 @@ const getModels = require('../../../models');
 
 module.exports = async (payload, { callResult, callError }, chargepointId) => {
   try {
+    callResult({});
     const db = getModels;
-    await db.Connector.update(
+    const data = await db.Connector.update(
       { status: payload.status },
       {
         where: {
           id: payload.connectorId,
-          include: [
-            {
-              model: db.Charger,
-              where: {
-                uuid: chargepointId,
-              },
-            },
-          ],
+          charger_id: chargepointId,
         },
       },
     );
-    callResult({});
+
+    console.log(data);
   } catch (error) {
     callError(error.message);
   }

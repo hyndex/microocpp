@@ -5,7 +5,7 @@ const getModels = require('../../models');
 // This function returns the charger with the specified chargerId
 async function getCharger(chargerId) {
   const charger = await getModels.Charger.findOne({
-    uuid: chargerId,
+    where: { id: chargerId },
   });
   return charger;
 }
@@ -17,14 +17,7 @@ async function getOrder(userId) {
 
 async function getIdTagDetails(idTag) {
   if (!idTag) return null;
-
-  const zone = _.split(idTag, ':')[0];
-  const db = _.attempt(getModels, zone);
-  // In this case, return null
-  if (_.isError(db)) {
-    return null;
-  }
-  return db.IdTag.findByPk(idTag);
+  return getModels.IdTag.findOne({ where: { tag_value: idTag } });
 }
 
 async function getIdTagInfo(idTag) {

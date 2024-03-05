@@ -22,15 +22,8 @@ async function getConfiguration(req, res) {
           db.ChargerConfig.findOrCreate({
             where: {
               key: config.key,
+              chargerId: cpid,
             },
-            include: [
-              {
-                model: db.Charger,
-                where: {
-                  uuid: cpid,
-                },
-              },
-            ],
             defaults: {
               value: config.value,
               readonly: config.readonly,

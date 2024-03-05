@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize(process.env.DB_CONNECTION_URL, {
-  dialect: 'postgres',
+  dialect: 'mysql',
   logging: false, // Consider turning logging off for production
 });
 
@@ -22,20 +22,20 @@ const MeterValue = defineMeterValue(sequelize, Sequelize.DataTypes);
 const ChargerConfig = defineChargerConfig(sequelize, Sequelize.DataTypes);
 
 // Define relationships
-Charger.hasMany(Connector);
-Connector.belongsTo(Charger);
+Charger.hasMany(Connector, { foreignKey: 'charger_id' });
+Connector.belongsTo(Charger, { foreignKey: 'charger_id' });
 
-ChargingSession.belongsTo(IdTag);
-IdTag.hasMany(ChargingSession);
+ChargingSession.belongsTo(IdTag, { foreignKey: 'userId' });
+IdTag.hasMany(ChargingSession, { foreignKey: 'userId' });
 
-ChargingSession.belongsTo(Connector);
-Connector.hasMany(ChargingSession);
+ChargingSession.belongsTo(Connector, { foreignKey: 'connectorId' });
+Connector.hasMany(ChargingSession, { foreignKey: 'connectorId' });
 
-ChargingSession.hasMany(MeterValue);
-MeterValue.belongsTo(ChargingSession);
+ChargingSession.hasMany(MeterValue, { foreignKey: 'ChargingSessionId' });
+MeterValue.belongsTo(ChargingSession, { foreignKey: 'ChargingSessionId' });
 
-Charger.hasOne(ChargerConfig);
-ChargerConfig.belongsTo(Charger);
+Charger.hasOne(ChargerConfig, { foreignKey: 'chargerId' });
+ChargerConfig.belongsTo(Charger, { foreignKey: 'chargerId' });
 
 module.exports = {
   sequelize,

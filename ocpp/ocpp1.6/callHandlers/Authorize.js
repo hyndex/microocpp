@@ -4,7 +4,9 @@ const getModels = require('../../../models');
 module.exports = async (payload, { callResult, callError }, chargepointId) => {
   try {
     const db = getModels;
-    const idTag = await db.IdTag.findOne({ where: { id: payload.idTag } });
+    const idTag = await db.IdTag.findOne({
+      where: { tag_value: payload.idTag },
+    });
     if (idTag && !idTag.isBlocked && !idTag.isExpired) {
       callResult({ idTagInfo: { status: 'Accepted' } });
     } else {

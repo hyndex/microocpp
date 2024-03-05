@@ -17,9 +17,6 @@ module.exports = (sequelize, DataTypes) =>
       vendor: {
         type: DataTypes.STRING,
       },
-      uuid: {
-        type: DataTypes.STRING,
-      },
       model: {
         type: DataTypes.STRING,
       },
@@ -59,9 +56,6 @@ module.exports = (sequelize, DataTypes) =>
       },
     },
     {
-      defaultScope: {
-        attributes: { exclude: ['password'] },
-      },
       scopes: {
         private: {
           attributes: {},

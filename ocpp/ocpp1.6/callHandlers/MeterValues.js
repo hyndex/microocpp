@@ -19,15 +19,7 @@ module.exports = async (payload, { callResult, callError }, chargepointId) => {
     const [chargingSession, connector] = await Promise.all([
       db.ChargingSession.findOne({ where: { transactionId } }),
       db.Connector.findOne({
-        where: { connectorId },
-        include: [
-          {
-            model: db.Charger,
-            where: {
-              uuid: chargepointId,
-            },
-          },
-        ],
+        where: { connectorId, charger_id: chargepointId },
       }),
     ]);
 
@@ -42,7 +34,6 @@ module.exports = async (payload, { callResult, callError }, chargepointId) => {
     callResult({});
 
     const tasks = meterValue.flatMap(mv => {
-      const timestamp = mv?.timestamp;
       const sampledValues = Array.isArray(mv?.sampledValue)
         ? mv.sampledValue
         : [];
@@ -51,7 +42,6 @@ module.exports = async (payload, { callResult, callError }, chargepointId) => {
         const { measurand, value, context, format, location, unit } = sv;
         const meterValueAttributes = {
           ChargingSessionId: chargingSession.id,
-          timestamp,
           value,
           context,
           format,
