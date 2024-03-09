@@ -8,7 +8,7 @@ module.exports = async (payload, { callResult, callError }, chargepointId) => {
       { status: payload.status },
       {
         where: {
-          id: payload.connectorId,
+          connectorId: payload.connectorId,
           charger_id: chargepointId,
         },
       },

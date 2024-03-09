@@ -91,7 +91,7 @@ module.exports = (sequelize, DataTypes) =>
       },
     },
     {
-      timestamps: false,
+      timestamps: true,
       createdAt: 'created_at',
       updatedAt: 'updated_at',
       hooks: {
