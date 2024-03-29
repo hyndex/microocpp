@@ -25,10 +25,10 @@ async function remoteStartTransaction(req, res) {
   try {
     const { cpid, idTag, connectorId, limit, limitType } = req.body; // connectorId is optional
 
-    const txId = await generateUniqueTransactionId();
+    const txnId = await generateUniqueTransactionId();
 
     setChargerQueue(cpid, {
-      txnId: txId,
+      txnId,
       connector: connectorId,
       idTag,
       limit,
@@ -46,7 +46,7 @@ async function remoteStartTransaction(req, res) {
     device
       .sendCall('RemoteStartTransaction', { connectorId, idTag })
       .then(response => {
-        response.transactionId = txId;
+        response.transactionId = txnId;
         res.status(200).send({
           status: 'Accepted',
           message: 'Remote start transaction command processed.',

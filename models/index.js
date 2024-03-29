@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const Sequelize = require('sequelize');
 
 const sequelize = new Sequelize(process.env.DB_CONNECTION_URL, {
@@ -12,6 +13,7 @@ const defineConnector = require('./connector');
 const defineChargingSession = require('./chargingSession');
 const defineMeterValue = require('./meterValue');
 const defineChargerConfig = require('./chargerConfig');
+const defineUser = require('./user');
 
 // Initialize models
 const IdTag = defineIdTag(sequelize, Sequelize.DataTypes);
@@ -20,6 +22,7 @@ const Connector = defineConnector(sequelize, Sequelize.DataTypes);
 const ChargingSession = defineChargingSession(sequelize, Sequelize.DataTypes);
 const MeterValue = defineMeterValue(sequelize, Sequelize.DataTypes);
 const ChargerConfig = defineChargerConfig(sequelize, Sequelize.DataTypes);
+const User = defineUser(sequelize, Sequelize.DataTypes);
 
 // Define relationships
 Charger.hasMany(Connector, { foreignKey: 'charger_id' });
@@ -49,4 +52,5 @@ module.exports = {
   ChargingSession,
   MeterValue,
   ChargerConfig,
+  User,
 };

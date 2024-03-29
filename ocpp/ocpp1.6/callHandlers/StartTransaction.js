@@ -1,13 +1,40 @@
 const getModels = require('../../../models');
+const {
+  generateUniqueTransactionId,
+} = require('../../../utils/queue/generateTransactionId');
 const { getChargerQueue } = require('../../../utils/queue/remoteStartQueue');
 const { getIdTagDetails } = require('../globalDBUtils');
 
 module.exports = async (payload, { callResult, callError }, chargepointId) => {
   try {
     const db = getModels;
-    const { txnId, limit, limitType } = await getChargerQueue(chargepointId);
-
+    let { txnId, limit, limitType } = await getChargerQueue(chargepointId);
     const { connectorId, idTag, meterStart, timestamp } = payload;
+
+    if (!txnId) {
+      txnId = await generateUniqueTransactionId();
+
+      const tagDetails = await getIdTagDetails(idTag);
+      const user = await db.User.findOne({
+        where: { id: tagDetails.userId },
+        attributes: ['id', 'wallet_amount'],
+      });
+
+      const charger = await db.Charger.findOne({
+        where: { id: chargepointId },
+        include: [
+          {
+            model: db.Connector,
+            where: { connectorId },
+            attributes: ['tariff_rate'],
+          },
+        ],
+      });
+
+      const tariffRate = charger.Connectors[0].dataValues.tariff_rate;
+      limit = user.wallet_amount / tariffRate;
+      limitType = 'KWH';
+    }
 
     const connector = await db.Connector.findOne({
       where: { connectorId, charger_id: chargepointId },
