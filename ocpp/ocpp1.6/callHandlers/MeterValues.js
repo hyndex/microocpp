@@ -40,17 +40,32 @@ module.exports = async (payload, { callResult, callError }, chargepointId) => {
 
       return sampledValues.map(sv => async () => {
         const { measurand, value, context, format, location, unit } = sv;
-        const meterValueAttributes = {
-          ChargingSessionId: chargingSession.id,
-          value,
-          context,
-          format,
-          measurand,
-          location,
-          unit,
-        };
 
-        await db.MeterValue.upsert(meterValueAttributes);
+        // First, try to find an existing record that matches your criteria
+        const existingRecord = await db.MeterValue.findOne({
+          where: {
+            ChargingSessionId: chargingSession.id,
+            measurand,
+            unit,
+          },
+        });
+
+        if (existingRecord) {
+          // If the record exists, update the value only
+          await existingRecord.update({ value });
+        } else {
+          // If no existing record, insert a new one
+          const meterValueAttributes = {
+            ChargingSessionId: chargingSession.id,
+            value,
+            context,
+            format,
+            measurand,
+            location,
+            unit,
+          };
+          await db.MeterValue.create(meterValueAttributes);
+        }
 
         // Check for stop transaction
         const needToStopCharge = await meterValueCheckStopTransaction({
